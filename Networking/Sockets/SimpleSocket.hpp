@@ -14,12 +14,11 @@ namespace HDE {
     class SimpleSocket {
     private:
         int sock;
-        int connection;
         struct sockaddr_in address;
     public:
         virtual ~SimpleSocket() = default;
 
-        SimpleSocket(int domain, int service, int protocol, u_long interface);
+        SimpleSocket(int domain, int service, int protocol, int port, u_long interface);
 
         // the reason I'm creating a virtual function is because, otherwise we have 2 functions to use. Bind in server side and connect in client side. Virtual function let user write their own functoin here
         virtual int connect_to_network(int sock, struct sockaddr_in address) = 0;
@@ -28,9 +27,6 @@ namespace HDE {
 
         struct sockaddr_in get_address();
         int get_socket();
-        int get_connection();
-
-        void set_connection(int con);
     };
 }
 
