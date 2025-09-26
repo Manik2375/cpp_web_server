@@ -15,8 +15,10 @@ namespace HDE {
         void accepter() override;
         void handler() override;
         void responder() override;
+
+        std::string message;
     public:
-        WebServer();
+        WebServer(int port, const std::string &msg);
         void launch() override;
     };
 }

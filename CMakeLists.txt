@@ -4,8 +4,8 @@ project(cpp_web_server)
 set(CMAKE_CXX_STANDARD 20)
 
 add_executable(cpp_web_server
-#        hoothoot.cpp
-#        hoothoot.hpp
+        hoothoot.cpp
+        hoothoot.hpp
         Networking/Sockets/SimpleSocket.hpp
         Networking/Sockets/SimpleSocket.cpp
         Networking/Sockets/BindingSocket.cpp
@@ -19,5 +19,4 @@ add_executable(cpp_web_server
         Networking/Servers/SimpleServer.cpp
         Networking/Servers/WebServer.hpp
         Networking/Servers/WebServer.cpp
-        Networking/Servers/test.cpp
 )
