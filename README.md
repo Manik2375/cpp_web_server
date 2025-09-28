@@ -34,7 +34,8 @@ cmake --build .
 After building, run the server binary (e.g., `cpp_web_server`).
 
 ```bash
-./cpp_web_server
+cd ../
+./build/cpp_web_server
 ```
 
 ## Sending Requests
