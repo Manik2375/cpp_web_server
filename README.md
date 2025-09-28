@@ -4,6 +4,8 @@
 
 A simple C++ web server implementation for educational purposes. This project demonstrates basic socket programming, HTTP request handling, and file serving using C++ and POSIX APIs.
 
+> The server is currently hosted using Railway at [https://cppwebserver-production.up.railway.app/](https://cppwebserver-production.up.railway.app/)
+
 ## Features
 - Handles HTTP requests (GET)
 - Serves static HTML and CSS files from the `assets/` directory
