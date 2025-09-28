@@ -1,5 +1,7 @@
 # cpp-web-server
 
+**NOTE: Currently I plan to add more features to this server. It currently lack proper file handling and much more**
+
 A simple C++ web server implementation for educational purposes. This project demonstrates basic socket programming, HTTP request handling, and file serving using C++ and POSIX APIs.
 
 ## Features
