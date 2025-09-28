@@ -4,7 +4,7 @@ A simple C++ web server implementation for educational purposes. This project de
 
 ## Features
 - Handles HTTP requests (GET)
-- Serves static HTML files from the `assets/` directory
+- Serves static HTML and CSS files from the `assets/` directory
 - Modular socket classes for easy extension
 - Simple logging and connection management
 
@@ -12,12 +12,12 @@ A simple C++ web server implementation for educational purposes. This project de
 - `hoothoot.cpp`, `hoothoot.hpp`: Main place to use the Webserver class
 - `Networking/Servers/`: Server classes (e.g., `WebServer`, `SimpleServer`)
 - `Networking/Sockets/`: Socket abstraction classes
-- `assets/`: Static HTML files to be served
+- `assets/`: Static HTML and CSS files to be served
 - `CMakeLists.txt`: Build configuration
 
 ## Building
 
-- Make sure Cmake and C++ compiler is installed (g++)
+- Make sure Cmake and C++ compiler is installed (I recommend using gcc with C++20)
 - `<sys/socket.h>` only works on Linux (and maybe MacOS, not 100% sure). Please run the project in Linux
 
 Then run:
@@ -43,6 +43,8 @@ curl http://127.0.0.1:4000/
 ```
 Replace `PORT` with the port your server is listening on. (By default it's 4000)
 
+Or just open it in a web browser.
+
 ## Troubleshooting
 - If you cannot reuse a port after restarting, ensure the socket option `SO_REUSEADDR` is set before binding. Or maybe try changing the port in `hoothoot.cpp`
 - If requests appear empty, check your socket read logic and buffer handling.
@@ -54,9 +56,9 @@ Please check these resources:
 - https://www.youtube.com/watch?v=YwHErWJIh6Y 
   - Great tutorial but uses a bit old C++ version (like C-style casting and other stuff). This project gains the foundation from this video, but I've changed many things from project. Like:
   - Using modern type casting
-  - Understanding the HTTP request path, to give appropriate files
+  - Understanding the HTML and CSS request path, to give appropriate files
   - Giving 404 error
-  - etc...
+  - etc... (I plan to add more ^-^)
 
 ## License
 This project is for educational use.

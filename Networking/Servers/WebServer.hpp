@@ -8,6 +8,7 @@
 #include "SimpleServer.hpp"
 #include <unistd.h>
 #include <fstream>
+#include <filesystem>
 
 namespace HDE {
     class WebServer: public SimpleServer {
@@ -18,7 +19,9 @@ namespace HDE {
         void handler() override;
         void responder() override;
 
+        int port;
         std::string path_requested;
+        std::string file_extension;
     public:
         WebServer(int port);
         void launch() override;

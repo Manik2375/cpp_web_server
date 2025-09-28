@@ -12,6 +12,7 @@ HDE::WebServer::WebServer(int port) : SimpleServer(AF_INET, SOCK_STREAM, 0, port
     if (setsockopt(get_socket()->get_socket(), SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt)) < 0) {
         perror("setsockopt failed");
     }
+    this->port = port;
     memset(buffer, 0, sizeof(buffer));
     WebServer::launch();
 }
@@ -47,6 +48,12 @@ void HDE::WebServer::handler() {
     }
 
     path_requested = HDE::WebServer::path_extractor(request);
+    std::filesystem::path path(path_requested);
+    file_extension = path.extension().string();
+
+    if (!file_extension.empty() && file_extension[0] == '.') {
+        file_extension = file_extension.substr(1);
+    }
 
     std::cout << request << std::endl;
     std::cout << "=== REQUEST END ===" << std::endl;
@@ -67,7 +74,7 @@ void HDE::WebServer::responder() {
                    message;
     } else {
         response = std::string("HTTP/1.1 200 OK\r\n") +
-                   "Content-Type: text/html; charset=UTF-8\r\n" +
+                   "Content-Type: text/" + file_extension + "; charset=UTF-8\r\n" +
                    "Content-Length: " + std::to_string(message.size()) + "\r\n" +
                    "\r\n" +
                    message;
@@ -94,6 +101,7 @@ void HDE::WebServer::responder() {
 void HDE::WebServer::launch() {
     while (true) {
         std::cout << "***************Waiting for connection****************" << std::endl;
+        std::cout << "Visit localhost:" << port << std::endl;
         accepter();
         handler();
         responder();
@@ -112,8 +120,9 @@ std::string HDE::WebServer::path_extractor(const std::string &httpRequest) {
 
 std::string HDE::WebServer::file_extractor(const std::string &path) {
     std::ifstream htmlFile("./assets" + path);
+    std::cout << "File path requested: "<< path << std::endl;
     if (!htmlFile) {
-        std::cerr << "Failed to open the file" << std::endl;
+        std::cerr << "Failed to open the file" << " Requested: " << path << std::endl;
         return "";
     }
     std::ostringstream fileContent;
