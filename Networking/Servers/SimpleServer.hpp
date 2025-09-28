@@ -5,7 +5,7 @@
 #ifndef CPP_WEB_SERVER_SIMPLESERVER_HPP
 #define CPP_WEB_SERVER_SIMPLESERVER_HPP
 
-#include "../Sockets/hoothoot-sockets.hpp";
+#include "../Sockets/hoothoot-sockets.hpp"
 #include <unistd.h>
 
 namespace HDE {

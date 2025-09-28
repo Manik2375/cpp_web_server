@@ -65,7 +65,7 @@ void HDE::WebServer::responder() {
 
     std::string response;
     if (message.empty()) {
-        message = "<h1 style=\"color: red;\">404 Error </h1>";
+        message = "<h1 style=\"color: red; font-size: 5rem;\">404 Error </h1>";
 
         response = std::string("HTTP/1.1 404 Not Found\r\n") +
                    "Content-Type: text/html; charset=UTF-8\r\n" +
