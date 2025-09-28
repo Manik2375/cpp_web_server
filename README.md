@@ -47,6 +47,21 @@ Replace `PORT` with the port your server is listening on. (By default it's 4000)
 
 Or just open it in a web browser.
 
+
+## How project works
+
+We have 2 directories inside `Networking`, one is `Socket` for cpp sockets and other one is `Servers` for your servers. The project aim to provide a library like ability to create servers, not only for web but for your needs
+
+### `Sockets` folder
+- `SimpleSocket` - Provides basic socket features, to create `socket()`
+- `BindingSocket` - Allows you to `bind()` to the network
+- `ListeningSocket` - Allows you to `listen()` to the socket. 
+- `ConnectingSocket` - [NOT RECOMMENDED TO USE] Purpose is to `connect()` to socket, but currently not well maintained file
+
+### `Servers` folder
+- `SimpleServer` - This is what will mainly deal with the sockets in `Sockets` folder
+- `WebServer` - Our webserver, which defines how to handle http request and stuff
+
 ## Troubleshooting
 - If you cannot reuse a port after restarting, ensure the socket option `SO_REUSEADDR` is set before binding. Or maybe try changing the port in `hoothoot.cpp`
 - If requests appear empty, check your socket read logic and buffer handling.
