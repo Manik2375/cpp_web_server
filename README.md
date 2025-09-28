@@ -20,7 +20,7 @@ A simple C++ web server implementation for educational purposes. This project de
 ## Building
 
 - Make sure Cmake and C++ compiler is installed (I recommend using gcc with C++20)
-- `<sys/socket.h>` only works on Linux (and maybe MacOS, not 100% sure). Please run the project in Linux
+- `<sys/socket.h>` only works on **Linux** (and maybe MacOS, not 100% sure). Please run the project in **Linux**
 
 Then run:
 
