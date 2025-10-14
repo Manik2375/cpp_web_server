@@ -4,6 +4,8 @@
 
 A simple C++ web server implementation for educational purposes. This project demonstrates basic socket programming, HTTP request handling, and file serving using C++ and POSIX APIs.
 
+> The server is currently hosted using Railway at [https://cppwebserver-production.up.railway.app/](https://cppwebserver-production.up.railway.app/)
+
 ## Features
 - Handles HTTP requests (GET)
 - Serves static HTML and CSS files from the `assets/` directory
@@ -20,7 +22,7 @@ A simple C++ web server implementation for educational purposes. This project de
 ## Building
 
 - Make sure Cmake and C++ compiler is installed (I recommend using gcc with C++20)
-- `<sys/socket.h>` only works on Linux (and maybe MacOS, not 100% sure). Please run the project in Linux
+- `<sys/socket.h>` only works on **Linux** (and maybe MacOS, not 100% sure). Please run the project in **Linux**
 
 Then run:
 
@@ -34,8 +36,8 @@ cmake --build .
 After building, run the server binary (e.g., `cpp_web_server`).
 
 ```bash
-cd ..
-./cpp_web_server
+cd ../
+./build/cpp_web_server
 ```
 
 ## Sending Requests
