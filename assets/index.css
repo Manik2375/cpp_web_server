@@ -61,3 +61,8 @@ li {
     font-size: 1.5rem;
     line-height: 1.5;
 }
+img {
+    display: block;
+    margin-inline: auto;
+    margin-block: 2em;
+}

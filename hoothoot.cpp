@@ -1,5 +1,5 @@
 #include "Networking/Servers/WebServer.hpp"
 
 int main() {
-    HDE::WebServer server(4002);
+    HDE::WebServer server(4000);
 }

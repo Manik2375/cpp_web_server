@@ -9,6 +9,7 @@
 #include <unistd.h>
 #include <fstream>
 #include <filesystem>
+#include <vector>
 
 namespace HDE {
     class WebServer: public SimpleServer {
@@ -26,7 +27,7 @@ namespace HDE {
         WebServer(int port);
         void launch() override;
         void path_extractor(const std::string &httpRequest);
-        std::string file_extractor(const std::string &path);
+        std::vector<char> file_extractor(const std::string &path);
     };
 }
 

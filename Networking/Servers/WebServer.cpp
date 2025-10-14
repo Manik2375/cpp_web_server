@@ -54,11 +54,11 @@ void HDE::WebServer::handler() {
 
 
 void HDE::WebServer::responder() {
-    std::string message = file_extractor(path_requested);
+    std::vector<char> fileData = file_extractor(path_requested);
 
     std::string response;
-    if (message.empty()) {
-        message = "<h1 style=\"color: red; font-size: 5rem;\">404 Error </h1>";
+    if (fileData.empty()) {
+        std::string message = "<h1 style=\"color: red; font-size: 5rem;\">404 Error </h1>";
 
         response = std::string("HTTP/1.1 404 Not Found\r\n") +
                    "Content-Type: text/html; charset=UTF-8\r\n" +
@@ -68,18 +68,30 @@ void HDE::WebServer::responder() {
     } else {
         response = std::string("HTTP/1.1 200 OK\r\n") +
                    "Content-Type: " + content_type + "\r\n" +
-                   "Content-Length: " + std::to_string(message.size()) + "\r\n" +
-                   "\r\n" +
-                   message;
+                   "Content-Length: " + std::to_string(fileData.size()) + "\r\n" +
+                   "\r\n";
     }
 
 
     size_t total_sent = 0;
     const size_t message_length = response.size();
-    const char *msg_ptr = response.c_str();
+    const char *header_ptr = response.c_str();
 
     while (total_sent < message_length) {
-        ssize_t bytes_sent = send(new_socket, msg_ptr, message_length - total_sent, 0);
+        ssize_t bytes_sent = send(new_socket, header_ptr, message_length - total_sent, 0);
+        if (bytes_sent < 0) {
+            std::cerr << "Error sending message" << std::endl;
+            return;
+        }
+        total_sent += bytes_sent;
+    }
+
+    total_sent = 0;
+    const char *content_ptr = fileData.data();
+    size_t body_length = fileData.size();
+
+    while (total_sent < body_length) {
+        ssize_t bytes_sent = send(new_socket, content_ptr + total_sent, body_length - total_sent, 0);
         if (bytes_sent < 0) {
             std::cerr << "Error sending message" << std::endl;
             return;
@@ -119,18 +131,31 @@ void HDE::WebServer::path_extractor(const std::string &httpRequest) {
         file_extension = file_extension.substr(1);
     }
 
-    if (file_extension == "html") content_type = "text/html; charset=UTF-8";
     else if (file_extension == "css") content_type = "text/css; charset=UTF-8";
+    else if (file_extension == "png") content_type = "image/png";
+    else if (file_extension == "jpeg" || file_extension == "jpg") content_type = "image/jpeg";
+    else content_type = "text/html; charset=UTF-8";
+
 }
 
-std::string HDE::WebServer::file_extractor(const std::string &path) {
-    std::ifstream htmlFile("./assets" + path);
+std::vector<char> HDE::WebServer::file_extractor(const std::string &path) {
+    std::ifstream file("./assets" + path, std::ios::binary | std::ios::ate);
+
     std::cout << "File path requested: "<< path << std::endl;
-    if (!htmlFile) {
+    if (!file) {
         std::cerr << "Failed to open the file" << " Requested: " << path << std::endl;
-        return "";
+        return {};
     }
-    std::ostringstream fileContent;
-    fileContent << htmlFile.rdbuf();
-    return fileContent.str();
+
+    std::streamsize size = file.tellg();
+    file.seekg(0, std::ios::beg);
+
+    std::vector<char> fileBuffer(size);
+    if (!file.read(fileBuffer.data(), size)) {
+        std::cerr << "Failed to read the file " << path << std::endl;
+        return {};
+    }
+
+    return fileBuffer;
+
 }
