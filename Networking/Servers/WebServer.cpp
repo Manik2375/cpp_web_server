@@ -46,14 +46,7 @@ void HDE::WebServer::handler() {
         request.replace(pos, 2, "\n");
         pos += 1;
     }
-
-    path_requested = HDE::WebServer::path_extractor(request);
-    std::filesystem::path path(path_requested);
-    file_extension = path.extension().string();
-
-    if (!file_extension.empty() && file_extension[0] == '.') {
-        file_extension = file_extension.substr(1);
-    }
+    HDE::WebServer::path_extractor(request);
 
     std::cout << request << std::endl;
     std::cout << "=== REQUEST END ===" << std::endl;
@@ -61,7 +54,7 @@ void HDE::WebServer::handler() {
 
 
 void HDE::WebServer::responder() {
-    std::string message = HDE::WebServer::file_extractor(path_requested);
+    std::string message = file_extractor(path_requested);
 
     std::string response;
     if (message.empty()) {
@@ -74,7 +67,7 @@ void HDE::WebServer::responder() {
                    message;
     } else {
         response = std::string("HTTP/1.1 200 OK\r\n") +
-                   "Content-Type: text/" + file_extension + "; charset=UTF-8\r\n" +
+                   "Content-Type: " + content_type + "\r\n" +
                    "Content-Length: " + std::to_string(message.size()) + "\r\n" +
                    "\r\n" +
                    message;
@@ -108,14 +101,26 @@ void HDE::WebServer::launch() {
     }
 }
 
-std::string HDE::WebServer::path_extractor(const std::string &httpRequest) {
+void HDE::WebServer::path_extractor(const std::string &httpRequest) {
     std::istringstream req(httpRequest); // treat like std::cin
     std::string method, path, version;
 
     req >> method >> path >> version;
 
-    if (path == "/") return "/index.html";
-    return path;
+    if (path == "/") {
+        path = "/index.html";
+    }
+    path_requested = path;
+
+    std::filesystem::path pathRequested(path);
+    std::string file_extension = pathRequested.extension().string();
+
+    if (!file_extension.empty() && file_extension[0] == '.') {
+        file_extension = file_extension.substr(1);
+    }
+
+    if (file_extension == "html") content_type = "text/html; charset=UTF-8";
+    else if (file_extension == "css") content_type = "text/css; charset=UTF-8";
 }
 
 std::string HDE::WebServer::file_extractor(const std::string &path) {

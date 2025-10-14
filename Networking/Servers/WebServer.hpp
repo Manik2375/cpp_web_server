@@ -21,12 +21,12 @@ namespace HDE {
 
         int port;
         std::string path_requested;
-        std::string file_extension;
+        std::string content_type;
     public:
         WebServer(int port);
         void launch() override;
-        static std::string path_extractor(const std::string &httpRequest);
-        static std::string file_extractor(const std::string &path);
+        void path_extractor(const std::string &httpRequest);
+        std::string file_extractor(const std::string &path);
     };
 }
 

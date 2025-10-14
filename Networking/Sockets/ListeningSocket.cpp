@@ -14,6 +14,6 @@ void HDE::ListeningSocket::start_listening() {
     listening = listen(get_socket(), backlog);
 }
 
-int HDE::ListeningSocket::get_backlog() {
+int HDE::ListeningSocket::get_backlog() const {
     return backlog;
 }
