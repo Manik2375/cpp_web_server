@@ -131,7 +131,7 @@ void HDE::WebServer::path_extractor(const std::string &httpRequest) {
         file_extension = file_extension.substr(1);
     }
 
-    else if (file_extension == "css") content_type = "text/css; charset=UTF-8";
+    if (file_extension == "css") content_type = "text/css; charset=UTF-8";
     else if (file_extension == "png") content_type = "image/png";
     else if (file_extension == "jpeg" || file_extension == "jpg") content_type = "image/jpeg";
     else content_type = "text/html; charset=UTF-8";

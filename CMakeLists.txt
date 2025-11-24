@@ -9,6 +9,7 @@ add_library(hoothoot_core STATIC
         Networking/Sockets/ListeningSocket.cpp
         Networking/Servers/SimpleServer.cpp
         Networking/Servers/WebServer.cpp
+        Networking/Sockets/ConnectingSocket.cpp
 )
 
 add_executable(cpp_web_server
