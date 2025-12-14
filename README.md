@@ -1,4 +1,4 @@
-# cpp-web-server
+a# cpp-web-server
 
 **NOTE: Currently I plan to add more features to this server. It currently lack proper file handling and much more**
 
@@ -24,6 +24,7 @@ A simple C++ web server implementation for educational purposes. This project de
 - Make sure Cmake and C++ compiler is installed (I recommend using gcc with C++20)
 - `<sys/socket.h>` only works on **Linux** (and maybe MacOS, not 100% sure). Please run the project in **Linux**
 
+
 Then run:
 
 ```bash
@@ -32,6 +33,7 @@ cmake ..
 cmake --build .
 ```
 
+Or you can refer to [Docker guideline](#using-docker) to use docker
 ## Running
 After building, run the server binary (e.g., `cpp_web_server`).
 
@@ -44,12 +46,36 @@ cd ../
 You can use `curl` to send requests from the terminal:
 
 ```bash
-curl http://127.0.0.1:4000/
+curl http://127.0.0.1:4005/
 ```
-Replace `PORT` with the port your server is listening on. (By default it's 4000)
+Replace `PORT` with the port your server is listening on. (By default it's 4005)
 
 Or just open it in a web browser.
 
+## Using Docker
+
+* Using Makefile:
+  
+  First create the image using 
+  ```bash
+  sudo make build
+  ```
+  Then run using 
+  ```bash
+  sudo make run
+  ```
+  
+* If you don't have Make installed, then:
+
+  Create image using:
+  ```bash
+   sudo docker build -t cpp_web_server .
+  ```
+  
+  Create the container using the binding mount to `./assets`
+  ```bash
+  sudo docker run -p 4005:4005 -v $(pwd)/assets:/app/assets cpp_web_server
+  ```
 
 ## How project works
 

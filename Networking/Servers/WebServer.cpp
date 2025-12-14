@@ -17,11 +17,26 @@ HDE::WebServer::WebServer(int port) : SimpleServer(AF_INET, SOCK_STREAM, 0, port
     WebServer::launch();
 }
 
+void HDE::WebServer::launch() {
+    while (true) {
+        std::cout << "***************Waiting for connection****************" << std::endl;
+        std::cout << "Visit localhost:" << port << std::endl;
+        accepter();
+        handler();
+        responder();
+    }
+}
+
+
 void HDE::WebServer::accepter() {
     struct sockaddr_in address = get_socket()->get_address();
     int addrLen = sizeof(address);
     new_socket = accept(get_socket()->get_socket(), reinterpret_cast<struct sockaddr *>(&address),
                         reinterpret_cast<socklen_t *>(&addrLen));
+
+    if (new_socket < 0) {
+        std::cerr << "Error accepting connection" << std::endl;
+    }
 
     memset(buffer, 0, sizeof(buffer));
     ssize_t bytes_read = read(new_socket, buffer, sizeof(buffer) - 1); // Leave space for null terminator
@@ -31,7 +46,7 @@ void HDE::WebServer::accepter() {
     } else if (bytes_read == 0) {
         std::cout << "Client disconnected" << std::endl;
     } else {
-        perror("read");
+        std::cerr << "Error reading data" << std::endl;
     }
 }
 
@@ -101,16 +116,6 @@ void HDE::WebServer::responder() {
 
     close(new_socket);
     std::cout << "socket closed" << std::endl;
-}
-
-void HDE::WebServer::launch() {
-    while (true) {
-        std::cout << "***************Waiting for connection****************" << std::endl;
-        std::cout << "Visit localhost:" << port << std::endl;
-        accepter();
-        handler();
-        responder();
-    }
 }
 
 void HDE::WebServer::path_extractor(const std::string &httpRequest) {
