@@ -1,4 +1,4 @@
-a# cpp-web-server
+# cpp-web-server
 
 **NOTE: Currently I plan to add more features to this server. It currently lack proper file handling and much more**
 
