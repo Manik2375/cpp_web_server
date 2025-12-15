@@ -27,6 +27,7 @@ WORKDIR /app
 
 RUN mkdir build
 
+COPY --from=builder /app/assets/ ./assets/
 COPY --from=builder /app/build/cpp_web_server ./build/
 
 EXPOSE 4005
